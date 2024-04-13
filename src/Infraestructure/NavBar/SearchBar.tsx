@@ -1,12 +1,9 @@
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-
-// import debounce from '../../helpers/debounce';
-
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-
+import debounce from "../utilities/debounce";
 //styled components
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -51,12 +48,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchBar() {
   const navigate = useNavigate();
 
-  // const debouncedSearchHandler = useMemo(() => {
-  //   return debounce(
-  //     ({ target: { value } }) => navigate(`/search/${value}`),
-  //     600
-  //   );
-  // }, []);
+  const debouncedSearchHandler = useMemo(() => {
+    console.log("value");
+    return debounce(({ target: { value } }) => navigate(`/search/${value}`), 600);
+  }, []);
 
   return (
     <Search>
@@ -66,7 +61,7 @@ export default function SearchBar() {
       <StyledInputBase
         placeholder="Buscar..."
         inputProps={{ "aria-label": "buscar", maxLength: 50 }}
-        // onChange={debouncedSearchHandler}
+        onChange={debouncedSearchHandler}
       />
     </Search>
   );

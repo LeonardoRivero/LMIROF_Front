@@ -1,9 +1,6 @@
-import { DistributionProductTypeResponse, ProductResponse, ProviderResponse, SaleResponse } from "./IResponse";
-
-export interface ITestState {
-  enable: boolean;
-  nm: number;
-}
+import { ItemDTO } from "./DTOS";
+import { OrderProductRequest } from "./IRequest";
+import { ProductDetailResponse, ProductResponse, ProviderResponse, SaleResponse, SellerResponse } from "./IResponse";
 
 export interface ILoginState {
   firstName: string;
@@ -12,13 +9,21 @@ export interface ILoginState {
   password: string;
 }
 
+export interface ISellerState {
+  allSeller: Array<SellerResponse>;
+  seller: SellerResponse | null;
+}
+
 export interface IProductState {
   name: string;
   reference: string;
   provider: string;
-  distributionProductType: string;
   listProvider: Array<ProviderResponse>;
-  listDistributionProductType: Array<DistributionProductTypeResponse>;
+  listItems: Array<ItemDTO>;
+  salePrice: string;
+  gainBusiness: string;
+  gainOperational: string;
+  productDetail: ProductDetailResponse | null;
 }
 
 export interface ISaleState {
@@ -26,4 +31,19 @@ export interface ISaleState {
   listProduct: Array<ProductResponse>;
   product: string;
   sale_price: string;
+}
+
+export interface IOrderState {
+  seller: number;
+  listProduct: Array<ProductResponse>;
+  product: string;
+  counterProduct: number;
+}
+
+export interface ICartState {
+  listOrderProducts: Array<ItemDTO>;
+  localStorage: string | null;
+  orderProduct: OrderProductRequest | null;
+  showModal: boolean;
+  messageModal: string;
 }

@@ -1,3 +1,5 @@
+import { ProductResponse } from "./IResponse";
+
 export interface HTTPClient {
   GET(path: string, queryparams?: object): Promise<Response>;
   POST(path: string, body: unknown): Promise<Response>;
@@ -15,4 +17,15 @@ export interface Notificator {
   show(title?: string, message?: string): object;
   setType(type: NotificationType): void;
   setTime(timerMs: number): void;
+}
+
+export enum ModalType {
+  SweetAlert = "SweetAlert",
+}
+export interface IFactoryNotifications {
+  createNotificator(notificationType: ModalType): Notificator;
+}
+
+export interface IMediatorUseCases {
+  getAllProducts(): Promise<Array<ProductResponse>>;
 }

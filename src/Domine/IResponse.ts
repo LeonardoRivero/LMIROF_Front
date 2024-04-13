@@ -1,3 +1,4 @@
+import { GenderDTO, IdentificationTypeDTO } from "./DTOS";
 import { SellerRequest } from "./IRequest";
 
 interface DepartmentResponse {
@@ -24,7 +25,6 @@ interface CountryResponse {
   tld: string;
   phone: string;
 }
-
 interface CityResponse {
   id: number;
   name: string;
@@ -37,32 +37,26 @@ interface CityResponse {
   country: number;
   region: number;
 }
-interface IdentificationTypeResponse {
-  id: number;
-  description: string;
-  abbreviation: string;
-}
+
 export interface ProviderResponse {
   id: number;
   business_name: string;
+  identification_type: IdentificationTypeDTO;
   identification: string;
   address: string;
+  country: CountryResponse;
+  department: DepartmentResponse;
+  city: CityResponse;
   email: string;
   status: boolean;
-  date_created: string;
-  last_modified: string;
-  department: DepartmentResponse;
-  country: CountryResponse;
-  city: CityResponse;
-  identification_type: IdentificationTypeResponse;
 }
-export interface DistributionProductTypeResponse {
-  id: number;
-  description: string;
-  profit_seller: number;
-  profit_bussiness: number;
-  profit_operational: number;
-}
+// export interface DistributionProductTypeResponse {
+//   id: number;
+//   description: string;
+//   profit_seller: number;
+//   profit_bussiness: number;
+//   profit_operational: number;
+// }
 
 export interface ProductResponse {
   id: number;
@@ -70,17 +64,22 @@ export interface ProductResponse {
   provider: ProviderResponse;
   reference: string;
   status: boolean;
-  // date_created: string;
-  // last_modified: string;
-  // provider: number;
-  distribution_type: DistributionProductTypeResponse;
-  // distribution_type: number;
+  sale_price: number;
+  gain_business: number;
+  gain_operational: number;
+  url_image: string;
 }
 
-export interface SellerResponse extends SellerRequest {
+export interface SellerResponse {
   id: number;
-  date_created: string;
-  last_modified: string;
+  name: string;
+  last_name: string;
+  identification_type: IdentificationTypeDTO;
+  identification: string;
+  email: string;
+  address: string;
+  gender: GenderDTO;
+  status: boolean;
 }
 
 export interface SaleResponse {
@@ -88,4 +87,15 @@ export interface SaleResponse {
   seller: SellerResponse;
   product: ProductResponse;
   reference_payment: string;
+}
+
+export interface ProductDetailResponse {
+  name: string;
+  stock: number;
+  id: number;
+  provider: string;
+  sale_price: string;
+  gain_business: string;
+  gain_operational: string;
+  url_image: string;
 }

@@ -1,7 +1,8 @@
 import { HTTPClient, UseCase } from "../Domine/IPatterns";
+import { SellerResponse } from "../Domine/IResponse";
 import HttpStatusCode from "./Utilities/HttpStatusCodes";
 
-export class GetAllSellerUseCase implements UseCase<null, null> {
+export class GetAllSellerUseCase implements UseCase<null, Array<SellerResponse>> {
   GenericService: HTTPClient;
   private urlApi: string;
 
@@ -10,10 +11,10 @@ export class GetAllSellerUseCase implements UseCase<null, null> {
     this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_SELLER;
   }
 
-  async execute(): Promise<null> {
+  async execute(): Promise<Array<SellerResponse>> {
     const response = await this.GenericService.GET(`${this.urlApi}${"list/"}`);
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
-      return null;
+      return [];
     }
 
     const listSellers = await response.json();

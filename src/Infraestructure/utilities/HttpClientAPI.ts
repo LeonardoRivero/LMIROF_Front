@@ -57,7 +57,6 @@ export class ClientAPI implements HTTPClient {
       path = this.urlQueryParameter(path, queryparams);
     }
     const response = await this.http(new Request(path, args));
-    console.log(response);
     return response;
   }
 

@@ -1,4 +1,6 @@
+import { CartPloc } from "../../Adapters/CartPloc";
 import { LoginBloc } from "../../Adapters/LoginBloc";
+import { OrderPloc } from "../../Adapters/OrderPlocs";
 import { ProductsPloc } from "../../Adapters/ProductsPloc";
 import { SalePloc } from "../../Adapters/SalePloc";
 import { SellerBloc } from "../../Adapters/SellerBloc";
@@ -22,9 +24,20 @@ function provideSalePloc(): SalePloc {
   const salePloc = new SalePloc(httpClient);
   return salePloc;
 }
+function provideOrderPloc(): OrderPloc {
+  const orderPloc = new OrderPloc(httpClient);
+  return orderPloc;
+}
+
+function providerCartPloc(): CartPloc {
+  const cartPloc = CartPloc.getInstance();
+  return cartPloc;
+}
 export const dependenciesLocator = {
   provideLoginPloc,
   provideSellerPloc,
   provideProductPloc,
   provideSalePloc,
+  provideOrderPloc,
+  providerCartPloc,
 };

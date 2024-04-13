@@ -16,7 +16,7 @@ export default function SimpleSnackbar() {
 
   return (
     <div>
-      <Snackbar open={context.show} autoHideDuration={3000} onClose={handleClose} message="Note archived" />
+      <Snackbar open={context.show} autoHideDuration={3000} onClose={handleClose} message="Esto podria ser un alert" />
     </div>
   );
 }

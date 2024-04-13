@@ -1,6 +1,6 @@
 import { HTTPClient, UseCase } from "../Domine/IPatterns";
 import { IProductRequest } from "../Domine/IRequest";
-import { ProductResponse } from "../Domine/IResponse";
+import { ProductDetailResponse, ProductResponse } from "../Domine/IResponse";
 import HttpStatusCode from "./Utilities/HttpStatusCodes";
 
 export class CreateProductUseCase implements UseCase<IProductRequest, ProductResponse | null> {
@@ -37,7 +37,25 @@ export class ListAllProductUseCase implements UseCase<null, Array<ProductRespons
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
       return [];
     }
-    console.log(response);
+    const product = await response.json();
+    return product;
+  }
+}
+
+export class GetDetailProductByIdUseCase implements UseCase<number, ProductDetailResponse | null> {
+  GenericService: HTTPClient;
+  private urlApi: string;
+
+  public constructor(httpClient: HTTPClient) {
+    this.GenericService = httpClient;
+    this.urlApi = "http://localhost:8000/api/product/detail/";
+  }
+
+  async execute(product_id: number): Promise<ProductDetailResponse | null> {
+    const response = await this.GenericService.GET(`${this.urlApi}${product_id}/`);
+    if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
+      return null;
+    }
     const product = await response.json();
     return product;
   }

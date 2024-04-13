@@ -15,7 +15,6 @@ export abstract class Ploc<S> {
   changeState(state: S) {
     this.internalState = state;
     if (this.listeners.length > 0) {
-      console.log(this.listeners.length);
       this.listeners.forEach((listener) => listener(this.state));
     }
   }

@@ -2,11 +2,13 @@ export interface IProductRequest {
   name: string;
   reference: string;
   status: boolean;
-  distribution_type: number;
+  sale_price: number;
   provider: number;
+  gain_business: number;
+  gain_operational: number;
 }
 
-export interface SellerRequest {
+export interface ProviderRequest {
   business_name: string;
   identification: string;
   address: string;
@@ -28,4 +30,24 @@ export interface NewSaleRequest {
   reference_payment: string;
   seller: number;
   products: Array<SaleProductRequest>;
+}
+
+export interface OrderRequest {
+  seller: number;
+  products: Array<OrderProductRequest>;
+}
+export interface OrderProductRequest {
+  quantity: number;
+  id: number;
+}
+
+export interface SellerRequest {
+  name: string;
+  last_name: string;
+  identification_type: number;
+  identification: string;
+  email: string;
+  address: string;
+  gender: number;
+  status: boolean;
 }

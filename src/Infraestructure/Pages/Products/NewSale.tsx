@@ -5,7 +5,9 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Box, Button, CssBaseline, Grid, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
 const defaultTheme = createTheme();
+
 export default function NewSale() {
   const ploc = dependenciesLocator.provideSalePloc();
   const state = usePlocState(ploc);

@@ -12,6 +12,8 @@ import CartItem from "./CartItem";
 import { usePlocState } from "../../common/usePlocState";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
+import { SwAlModalWithButtons } from "../../utilities/NotificationsImpl";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const cartPloc = dependenciesLocator.providerCartPloc();
@@ -22,10 +24,22 @@ export default function Cart() {
   const sellerState = usePlocState(sellerPloc);
 
   const plocOrder = dependenciesLocator.provideOrderPloc();
+  const navigate = useNavigate();
 
-  function handleClick() {
-    if (sellerState.seller == null) return;
-    plocOrder.createOrder(cart, sellerState.seller?.id);
+  async function handleClick() {
+    if (sellerState.sellerID == null) return;
+    const sweetModal = new SwAlModalWithButtons();
+    try {
+      const confirm = await sweetModal.show("Atencion", "Verificaste tu carrito antes de crear la orden?");
+      if (confirm == false) return;
+      await plocOrder.createOrder(cart, sellerState.sellerID);
+      sweetModal.setType("success");
+      await sweetModal.show("Excelente", "Orden creada correctamente");
+      navigate("/");
+    } catch (error) {
+      sweetModal.setType("error");
+      await sweetModal.show("Atencion", "Error al crear la orden");
+    }
   }
 
   function handleChangeSeller(e: any) {
@@ -47,6 +61,7 @@ export default function Cart() {
     <>
       <h2>{`Solicitud Orden: (${cartPloc.amountOfItemsInCart()}) unidades`}</h2>
       <hr />
+      {sellerState.sellerID}
       <Grid container spacing={2} justifyContent="flex-end">
         <Grid item xs={12} sm={3}>
           <TextField
@@ -54,9 +69,9 @@ export default function Cart() {
             label="Vendedor@ .."
             sx={{ width: 200 }}
             select
-            value={sellerState.seller}
+            value={sellerState.sellerID}
             onChange={handleChangeSeller}
-            name="seller"
+            name="sellerID"
             autoFocus
           >
             {sellerState.allSeller.length === 0 ? (
@@ -81,7 +96,7 @@ export default function Cart() {
               color="error"
               onClick={handleClick}
               startIcon={<LoyaltyIcon />}
-              disabled={sellerState.seller == null || stateCart.listOrderProducts.length == 0}
+              disabled={sellerState.sellerID == "" || stateCart.listOrderProducts.length == 0}
             >
               Generar orden
             </Button>

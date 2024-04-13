@@ -1,15 +1,14 @@
 import { ListAllProductUseCase } from "../Application/ProductsUseCases";
+import { CreateOrderUseCase } from "../Application/OrdersUseCases";
 import { OrderProductRequest, OrderRequest } from "../Domine/IRequest";
 import { HTTPClient, UseCase } from "../Domine/IPatterns";
 import { IOrderState } from "../Domine/IStates";
 import { Ploc } from "../Domine/Ploc";
-import { ProductResponse } from "../Domine/IResponse";
-import { SweetAlertModal } from "../Infraestructure/utilities/NotificationsImpl";
+import { OrderResponse, ProductResponse } from "../Domine/IResponse";
 import { ItemDTO } from "../Domine/DTOS";
-import { CreateOrderUseCase } from "../Application/OrdersUseCases";
 
 export class OrderPloc extends Ploc<IOrderState> {
-  private service: UseCase<OrderRequest, null>;
+  private service: UseCase<OrderRequest, OrderResponse | null>;
   private providerUseCase: UseCase<null, Array<ProductResponse>>;
   constructor(private httpClient: HTTPClient) {
     const initialState: IOrderState = {
@@ -23,7 +22,7 @@ export class OrderPloc extends Ploc<IOrderState> {
     this.providerUseCase = new ListAllProductUseCase(this.httpClient);
   }
 
-  async createOrder(listItems: Array<ItemDTO>, sellerID: number): Promise<void> {
+  async createOrder(listItems: Array<ItemDTO>, sellerID: string): Promise<void> {
     const orderProduct: Array<OrderProductRequest> = listItems.map((p) => ({
       id: p.id,
       quantity: p.quantity,
@@ -31,18 +30,14 @@ export class OrderPloc extends Ploc<IOrderState> {
 
     const payload: OrderRequest = {
       products: orderProduct,
-      seller: 1,
+      seller: parseInt(sellerID),
     };
-    const sweetModal = new SweetAlertModal();
-    const confirm = await sweetModal.show("Atencion", "Verificaste tu carrito antes de crear la orden?");
 
-    if (confirm == false) return;
     const response = await this.service.execute(payload);
 
-    // if (response == null) {
-    //   throw Error("Error creating product");
-    // }
-    // this.changeState({ ...this.state, name: "gfdg" });
+    if (response == null) {
+      throw new Error();
+    }
   }
 
   async getInitialData() {

@@ -99,3 +99,23 @@ export interface ProductDetailResponse {
   gain_operational: string;
   url_image: string;
 }
+
+export interface SellerResponseFaltaMejorarConBackend {
+  id: number;
+  name: string;
+  last_name: string;
+  identification: string;
+  email: string;
+  address: string;
+  status: boolean;
+  date_created: string;
+  last_modified: string;
+  identification_type: number;
+  gender: number;
+}
+export interface OrderResponse {
+  id: number;
+  seller: SellerResponseFaltaMejorarConBackend;
+  product: Array<ProductResponse>;
+  total: number;
+}

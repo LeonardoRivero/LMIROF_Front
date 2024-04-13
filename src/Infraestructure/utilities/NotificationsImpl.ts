@@ -2,7 +2,7 @@ import { IFactoryNotifications, ModalType, NotificationType, Notificator } from 
 import Swal, { SweetAlertIcon, SweetAlertOptions, SweetAlertResult } from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-export class SweetAlertModal implements Notificator {
+export class SwAlModalWithButtons implements Notificator {
   private message = "";
   private title = "";
   private icon: SweetAlertIcon = "info";
@@ -45,7 +45,7 @@ export class FactoryNotifications implements IFactoryNotifications {
   private notifications: Record<string, Notificator>;
   public constructor() {
     this.notifications = {
-      SweetAlert: new SweetAlertModal(),
+      SweetAlert: new SwAlModalWithButtons(),
     };
   }
   createNotificator(notificationType: ModalType): Notificator {

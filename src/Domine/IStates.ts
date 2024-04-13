@@ -11,7 +11,7 @@ export interface ILoginState {
 
 export interface ISellerState {
   allSeller: Array<SellerResponse>;
-  seller: SellerResponse | null;
+  sellerID: string;
 }
 
 export interface IProductState {

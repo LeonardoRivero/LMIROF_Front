@@ -7,7 +7,7 @@ import { Ploc } from "../Domine/Ploc";
 export class SellerBloc extends Ploc<ISellerState> {
   private service: UseCase<null, Array<SellerResponse>>;
   constructor(private httpClient: HTTPClient) {
-    const state: ISellerState = { allSeller: [], seller: null };
+    const state: ISellerState = { allSeller: [], sellerID: "" };
     super(state);
     this.service = new GetAllSellerUseCase(this.httpClient);
   }

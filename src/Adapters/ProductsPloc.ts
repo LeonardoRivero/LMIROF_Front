@@ -9,7 +9,7 @@ import { IProductState } from "../Domine/IStates";
 import { Ploc } from "../Domine/Ploc";
 import { GetAllProvidersUseCase } from "../Application/ProviderUseCases";
 import { ProductDetailResponse, ProductResponse, ProviderResponse } from "../Domine/IResponse";
-import { SweetAlertModal } from "../Infraestructure/utilities/NotificationsImpl";
+import { SwAlModalWithButtons } from "../Infraestructure/utilities/NotificationsImpl";
 import { ItemDTO } from "../Domine/DTOS";
 export class ProductsPloc extends Ploc<IProductState> {
   private service: UseCase<IProductRequest, ProductResponse | null>;
@@ -46,7 +46,7 @@ export class ProductsPloc extends Ploc<IProductState> {
       gain_operational: parseFloat(a.gainOperational),
     };
 
-    const sweetAlertModal = new SweetAlertModal();
+    const sweetAlertModal = new SwAlModalWithButtons();
     const confirm = await sweetAlertModal.show("Atencion", "Desea crear el producto?");
 
     if (confirm == false) return;

@@ -35,6 +35,7 @@ export default function Cart() {
       await plocOrder.createOrder(cart, sellerState.sellerID);
       sweetModal.setType("success");
       await sweetModal.show("Excelente", "Orden creada correctamente");
+      cartPloc.resetCart()
       navigate("/");
     } catch (error) {
       sweetModal.setType("error");
@@ -61,7 +62,6 @@ export default function Cart() {
     <>
       <h2>{`Solicitud Orden: (${cartPloc.amountOfItemsInCart()}) unidades`}</h2>
       <hr />
-      {sellerState.sellerID}
       <Grid container spacing={2} justifyContent="flex-end">
         <Grid item xs={12} sm={3}>
           <TextField

@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import React from "react";
 
 export default function MenuNavList() {
-  const pages: Array<string> = ["Cuidado de Piel", "Pijamas", "Maquillaje", "Products", "Orders"];
+  const pages: Array<string> = ["Inicio",  "Products", "Orders"];
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event: any) => {

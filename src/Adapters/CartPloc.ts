@@ -26,7 +26,8 @@ export class CartPloc extends Ploc<ICartState> {
   addItemToCart(item: ItemDTO): void {
     const value = localStorage.getItem("cart");
     if (typeof value !== "string") {
-      throw new Error("Localstorage is wrong");
+      localStorage.setItem("cart", JSON.stringify([]));
+      throw new Error("Localstore is wrong")
     }
     const cart: Array<ItemDTO> = JSON.parse(value);
     cart.push(item);
@@ -45,24 +46,39 @@ export class CartPloc extends Ploc<ICartState> {
     localStorage.setItem("cart", JSON.stringify(this.state.listOrderProducts.filter((cartItem) => cartItem.id !== id)));
   }
 
-  isInCart(itemId: number): boolean {
+  isInCart(itemId: number, quantity: number): boolean {
     const value = localStorage.getItem("cart");
     if (typeof value !== "string") {
       throw new Error("Localstorage is wrong");
     }
-    const cart: Array<ItemDTO> = JSON.parse(value);
-    return cart.some((cartItem) => cartItem.id === itemId);
-    // if (existProduct) {
-    //   this.changeState({ ...this.state, showModal: true, messageModal: "Producto ya fue agregado" });
-    // }
-    //  existProduct;
+
+    let cart: Array<ItemDTO> = JSON.parse(value);
+    console.log(cart);
+    const matchItemAndQuantity = cart.some((cartItem) => cartItem.id === itemId && cartItem.quantity === quantity);
+    if (matchItemAndQuantity) {
+      this.changeState({ ...this.state, showModal: true, messageModal: "Producto ya fue agregado" });
+      return matchItemAndQuantity;
+    }
+    
+    const existProduct = cart.some((cartItem) => cartItem.id === itemId);
+    if (existProduct) {
+      const found = cart.filter((element: ItemDTO) => element.id !== itemId);
+      if (found === undefined) {
+        cart = []
+      }
+      else {
+        cart = found
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+    return false
   }
   amountOfItemsInCart(): number {
-    const h = localStorage.getItem("cart");
+    // const h = localStorage.getItem("cart");
     // const cart = JSON.parse(localStorage.getItem("cart")) || '""';
 
     const cart = this.getCurrentStateCart();
-    return cart.reduce((acc: any, item: { quantity: any }) => (acc += item.quantity), 0);
+    return cart.reduce((acc: number, item: { quantity: number }) => (acc += item.quantity), 0);
   }
 
   getCurrentStateCart(): Array<ItemDTO> {
@@ -81,5 +97,10 @@ export class CartPloc extends Ploc<ICartState> {
 
   hideModal() {
     this.changeState({ ...this.state, showModal: false });
+  }
+
+  resetCart(): void {
+    localStorage.setItem("cart", JSON.stringify([]));
+    this.changeState({ ...this.state, listOrderProducts: [] })
   }
 }

@@ -21,3 +21,22 @@ export class CreateOrderUseCase implements UseCase<OrderRequest, OrderResponse |
     return product;
   }
 }
+
+export class GetAllPendingOrderUseCase implements UseCase<null, Array<OrderResponse >> {
+  GenericService: HTTPClient;
+  private urlApi: string;
+
+  public constructor(httpClient: HTTPClient) {
+    this.GenericService = httpClient;
+    this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_ORDER;
+  }
+
+  async execute(): Promise<Array<OrderResponse>> {
+    const response = await this.GenericService.GET(`${this.urlApi}${"pending/"}`);
+    if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
+      return [];
+    }
+    const allOrderPending = await response.json();
+    return allOrderPending;
+  }
+}

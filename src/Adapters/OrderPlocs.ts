@@ -1,5 +1,5 @@
 import { ListAllProductUseCase } from "../Application/ProductsUseCases";
-import { CreateOrderUseCase } from "../Application/OrdersUseCases";
+import { CreateOrderUseCase, GetAllPendingOrderUseCase } from "../Application/OrdersUseCases";
 import { OrderProductRequest, OrderRequest } from "../Domine/IRequest";
 import { HTTPClient, UseCase } from "../Domine/IPatterns";
 import { IOrderState } from "../Domine/IStates";
@@ -10,16 +10,20 @@ import { ItemDTO } from "../Domine/DTOS";
 export class OrderPloc extends Ploc<IOrderState> {
   private service: UseCase<OrderRequest, OrderResponse | null>;
   private providerUseCase: UseCase<null, Array<ProductResponse>>;
+  private pendingOrderUseCase: UseCase<null, Array<OrderResponse>>
   constructor(private httpClient: HTTPClient) {
     const initialState: IOrderState = {
       seller: 0,
       product: "",
       listProduct: [],
       counterProduct: 1,
+      listOrdersPending: [],
+      stateOrder: false
     };
     super(initialState);
     this.service = new CreateOrderUseCase(this.httpClient);
     this.providerUseCase = new ListAllProductUseCase(this.httpClient);
+    this.pendingOrderUseCase = new GetAllPendingOrderUseCase(this.httpClient)
   }
 
   async createOrder(listItems: Array<ItemDTO>, sellerID: string): Promise<void> {
@@ -56,5 +60,15 @@ export class OrderPloc extends Ploc<IOrderState> {
   async decrementProduct(currentValue: number) {
     const value = currentValue - 1;
     this.changeState({ ...this.state, counterProduct: value });
+  }
+
+  async getListOrderByStatus(status: boolean): Promise<void> {
+    const response = await this.pendingOrderUseCase.execute()
+    this.changeState({ ...this.state, listOrdersPending: response})
+    if (status) {
+      console.log(status);
+    } else {
+      console.log(response);
+    }
   }
 }

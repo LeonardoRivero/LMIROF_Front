@@ -1,6 +1,6 @@
 import { ItemDTO } from "./DTOS";
 import { OrderProductRequest } from "./IRequest";
-import { ProductDetailResponse, ProductResponse, ProviderResponse, SaleResponse, SellerResponse } from "./IResponse";
+import { OrderResponse, ProductDetailResponse, ProductResponse, ProviderResponse, SaleResponse, SellerResponse } from "./IResponse";
 
 export interface ILoginState {
   firstName: string;
@@ -38,6 +38,8 @@ export interface IOrderState {
   listProduct: Array<ProductResponse>;
   product: string;
   counterProduct: number;
+  listOrdersPending:Array<OrderResponse>
+  stateOrder:boolean
 }
 
 export interface ICartState {

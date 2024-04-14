@@ -1,12 +1,5 @@
-import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import Divider from "@mui/material/Divider";
-import Box from "@mui/material/Box";
+import { Alert, Snackbar,Box,Divider,CardMedia,Typography,Button,Grid,Card } from "@mui/material";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import { ProductDetailResponse } from "../../../Domine/IResponse";
 import GoBackBtn from "../../ui/GoBackBtn";
@@ -15,14 +8,13 @@ import ItemDescription from "./ItemDescription";
 import { usePlocState } from "../../common/usePlocState";
 import { dependenciesLocator } from "../../common/DependenciesLocator";
 import { ItemDTO } from "../../../Domine/DTOS";
-import { Alert, Snackbar } from "@mui/material";
 
 export default function ItemDetail({ detail }: { detail: ProductDetailResponse }) {
   const ploc = dependenciesLocator.providerCartPloc();
   const state = usePlocState(ploc);
 
   function handleAddItemToCart(quantity: number) {
-    if (ploc.isInCart(detail.id) || quantity === 0) return;
+    if (ploc.isInCart(detail.id,quantity) || quantity === 0) return;
     const orderProduct: ItemDTO = {
       id: detail.id,
       price: parseFloat(detail.sale_price),
@@ -30,7 +22,6 @@ export default function ItemDetail({ detail }: { detail: ProductDetailResponse }
       title: detail.name,
       url: detail.url_image,
     };
-
     ploc.addItemToCart(orderProduct);
   }
 
@@ -83,11 +74,11 @@ export default function ItemDetail({ detail }: { detail: ProductDetailResponse }
           </Box>
         </Grid>
       </Grid>
-      {/* <Snackbar open={state.showModal} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar open={state.showModal} autoHideDuration={3000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           {state.messageModal}
         </Alert>
-      </Snackbar> */}
+      </Snackbar>
     </>
   );
 }

@@ -1,5 +1,4 @@
 import { GenderDTO, IdentificationTypeDTO } from "./DTOS";
-import { SellerRequest } from "./IRequest";
 
 interface DepartmentResponse {
   id: number;
@@ -41,8 +40,8 @@ interface CityResponse {
 export interface ProviderResponse {
   id: number;
   business_name: string;
-  identification_type: IdentificationTypeDTO;
   identification: string;
+  identification_type: IdentificationTypeDTO;
   address: string;
   country: CountryResponse;
   department: DepartmentResponse;
@@ -113,9 +112,36 @@ export interface SellerResponseFaltaMejorarConBackend {
   identification_type: number;
   gender: number;
 }
+
+export interface ProviderResponseII {
+  id: number;
+  business_name: string;
+  identification: string;
+  address: string;
+  email: string;
+  status: boolean;
+  date_created: string,
+  last_modified: string,
+  identification_type: number;
+  country: number;
+  department: number;
+  city: number;
+}
+
+export interface ProductResponseII {
+  id: number;
+  name: string;
+  provider: ProviderResponseII;
+  reference: string;
+  status: boolean;
+  sale_price: number;
+  gain_business: number;
+  gain_operational: number;
+  url_image: string;
+}
 export interface OrderResponse {
   id: number;
   seller: SellerResponseFaltaMejorarConBackend;
-  product: Array<ProductResponse>;
+  product: Array<ProductResponseII>;
   total: number;
 }

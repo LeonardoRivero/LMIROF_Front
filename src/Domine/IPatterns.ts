@@ -1,4 +1,4 @@
-import { ProductResponse } from "./IResponse";
+import { PaymentMethodResponse, ProductResponse } from "./IResponse";
 
 export interface HTTPClient {
   GET(path: string, queryparams?: object): Promise<Response>;
@@ -21,6 +21,7 @@ export interface Notificator {
 
 export enum ModalType {
   SweetAlert = "SweetAlert",
+  SweetAlertToast = "SweetAlertToast",
 }
 export interface IFactoryNotifications {
   createNotificator(notificationType: ModalType): Notificator;
@@ -28,4 +29,5 @@ export interface IFactoryNotifications {
 
 export interface IMediatorUseCases {
   getAllProducts(): Promise<Array<ProductResponse>>;
+  getAllPaymentMethod(): Promise<Array<PaymentMethodResponse>>;
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import AppRouter from "./Infraestructure/routes/AppRouter";
 import "./App.css";
 import NotificationContextProvider from "./Infraestructure/context/NotificationsContext";

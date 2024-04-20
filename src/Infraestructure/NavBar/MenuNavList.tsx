@@ -2,10 +2,9 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import React from "react";
 
 export default function MenuNavList() {
-  const pages: Array<string> = ["Inicio",  "Products", "Orders"];
+  const pages: Array<string> = ["Inicio", "Products", "Orders", "Sellers"];
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event: any) => {

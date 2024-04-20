@@ -1,6 +1,14 @@
 import { ItemDTO } from "./DTOS";
-import { OrderProductRequest } from "./IRequest";
-import { OrderResponse, ProductDetailResponse, ProductResponse, ProviderResponse, SaleResponse, SellerResponse } from "./IResponse";
+import { OrderProductRequest, PaymentOrderRequest } from "./IRequest";
+import {
+  OrderResponse,
+  ProductDetailResponse,
+  ProductResponse,
+  ProviderResponse,
+  SaleResponse,
+  SellerResponse,
+  SummarySellerResponse,
+} from "./IResponse";
 
 export interface ILoginState {
   firstName: string;
@@ -12,6 +20,11 @@ export interface ILoginState {
 export interface ISellerState {
   allSeller: Array<SellerResponse>;
   sellerID: string;
+  startDate: string;
+  endDate: string;
+  summarySeller: SummarySellerResponse | null;
+  showModal: boolean;
+  messageModal: string;
 }
 
 export interface IProductState {
@@ -38,8 +51,11 @@ export interface IOrderState {
   listProduct: Array<ProductResponse>;
   product: string;
   counterProduct: number;
-  listOrdersPending:Array<OrderResponse>
-  stateOrder:boolean
+  listOrdersPending: Array<OrderResponse>;
+  paymentMethod: string;
+  referencePayment: string;
+  total: string;
+  singlePayment: boolean;
 }
 
 export interface ICartState {

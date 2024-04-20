@@ -4,6 +4,7 @@ import { OrderPloc } from "../../Adapters/OrderPlocs";
 import { ProductsPloc } from "../../Adapters/ProductsPloc";
 import { SalePloc } from "../../Adapters/SalePloc";
 import { SellerBloc } from "../../Adapters/SellerBloc";
+import MediatorUseCases from "../../Application/MediatorUseCases";
 import { ClientAPI } from "../utilities/HttpClientAPI";
 
 const httpClient = new ClientAPI();
@@ -12,7 +13,7 @@ function provideLoginPloc(): LoginBloc {
   return testPloc;
 }
 function provideSellerPloc(): SellerBloc {
-  const sellerPloc = new SellerBloc(httpClient);
+  const sellerPloc = SellerBloc.getInstance(httpClient);
   return sellerPloc;
 }
 function provideProductPloc(): ProductsPloc {
@@ -33,6 +34,11 @@ function providerCartPloc(): CartPloc {
   const cartPloc = CartPloc.getInstance();
   return cartPloc;
 }
+
+function providerMediator(): MediatorUseCases {
+  const mediator = new MediatorUseCases(httpClient);
+  return mediator;
+}
 export const dependenciesLocator = {
   provideLoginPloc,
   provideSellerPloc,
@@ -40,4 +46,5 @@ export const dependenciesLocator = {
   provideSalePloc,
   provideOrderPloc,
   providerCartPloc,
+  providerMediator,
 };

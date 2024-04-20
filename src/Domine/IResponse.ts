@@ -99,7 +99,7 @@ export interface ProductDetailResponse {
   url_image: string;
 }
 
-export interface SellerResponseFaltaMejorarConBackend {
+export interface SellerNotDepthResponse {
   id: number;
   name: string;
   last_name: string;
@@ -120,8 +120,8 @@ export interface ProviderResponseII {
   address: string;
   email: string;
   status: boolean;
-  date_created: string,
-  last_modified: string,
+  date_created: string;
+  last_modified: string;
   identification_type: number;
   country: number;
   department: number;
@@ -141,7 +141,64 @@ export interface ProductResponseII {
 }
 export interface OrderResponse {
   id: number;
-  seller: SellerResponseFaltaMejorarConBackend;
+  seller: SellerNotDepthResponse;
   product: Array<ProductResponseII>;
+  total: number;
+  date_created: string;
+}
+
+export interface ResumeSale {
+  gain_seller: number;
+  date_sale: string;
+  reference_payment: string;
+  total: number;
+}
+
+export interface ResumeProduct {
+  sale_price: number;
+  name: string;
+  quantity: number;
+}
+
+export interface ResumeSellerResponse {
+  sales: Array<ResumeSale>;
+  products: Array<ResumeProduct>;
+  order_id: number;
+  total_order: number;
+  total_reported: number;
+}
+
+export interface SummarySellerResponse {
+  name_seller: string;
+  total_to_pay: number;
+  resume: Array<ResumeSellerResponse>;
+}
+
+export interface PaymentMethodResponse {
+  id: number;
+  description: string;
+  code: string;
+}
+
+export interface SimpleOrderResponse {
+  id: number;
+  total: number;
+  is_finish: boolean;
+  date_created: string;
+  last_modified: string;
+  seller: number;
+  product: Array<number>;
+}
+export interface SaleDetailResponse {
+  id: number;
+  seller: SellerNotDepthResponse;
+  order: SimpleOrderResponse;
+  reference_payment: string;
+  payment_method: PaymentMethodResponse;
+  is_cash_payment: boolean;
+  is_finish: boolean;
+  gain_seller: number;
+  gain_business: number;
+  gain_operational: number;
   total: number;
 }

@@ -26,12 +26,6 @@ export interface SaleProductRequest {
   id: number;
 }
 
-export interface NewSaleRequest {
-  reference_payment: string;
-  seller: number;
-  products: Array<SaleProductRequest>;
-}
-
 export interface OrderRequest {
   seller: number;
   products: Array<OrderProductRequest>;
@@ -50,4 +44,17 @@ export interface SellerRequest {
   address: string;
   gender: number;
   status: boolean;
+}
+
+export interface RangeDateRequest {
+  start: string;
+  end: string;
+}
+
+export interface PaymentOrderRequest {
+  reference_payment: string;
+  payment_method: number;
+  is_cash_payment: boolean;
+  order_id: number;
+  total: number;
 }

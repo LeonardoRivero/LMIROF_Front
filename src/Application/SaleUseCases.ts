@@ -1,9 +1,8 @@
 import { HTTPClient, UseCase } from "../Domine/IPatterns";
-import { NewSaleRequest } from "../Domine/IRequest";
-import { SaleResponse } from "../Domine/IResponse";
+import { SaleDetailResponse } from "../Domine/IResponse";
 import HttpStatusCode from "./Utilities/HttpStatusCodes";
 
-export class CreateSaleUseCase implements UseCase<NewSaleRequest, SaleResponse | null> {
+export class SaleDetailByOrderIDUseCase implements UseCase<number, SaleDetailResponse | null> {
   GenericService: HTTPClient;
   private urlApi: string;
 
@@ -12,8 +11,9 @@ export class CreateSaleUseCase implements UseCase<NewSaleRequest, SaleResponse |
     this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_SALE;
   }
 
-  async execute(payload: NewSaleRequest): Promise<null> {
-    const response = await this.GenericService.POST(`${this.urlApi}${"create/"}`, payload);
+  async execute(order_id: number): Promise<SaleDetailResponse | null> {
+    const queryParams = { order: order_id };
+    const response = await this.GenericService.GET(`${this.urlApi}${"filter/"}`, queryParams);
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
       return null;
     }

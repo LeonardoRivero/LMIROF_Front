@@ -1,17 +1,17 @@
 import { HTTPClient, UseCase } from "../Domine/IPatterns";
-import { DistributionProductTypeResponse } from "../Domine/IResponse";
+import { PaymentMethodResponse } from "../Domine/IResponse";
 import HttpStatusCode from "./Utilities/HttpStatusCodes";
 
-export class GetAllDistributionProductType implements UseCase<null, Array<DistributionProductTypeResponse>> {
+export class GetAllPaymentMethod implements UseCase<null, Array<PaymentMethodResponse>> {
   GenericService: HTTPClient;
   private urlApi: string;
 
   public constructor(httpClient: HTTPClient) {
     this.GenericService = httpClient;
-    this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_DISTRIBUTION_PRODUCT_TYPE;
+    this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_PAYMENT_METHOD;
   }
 
-  async execute(): Promise<Array<DistributionProductTypeResponse>> {
+  async execute(): Promise<Array<PaymentMethodResponse>> {
     const response = await this.GenericService.GET(`${this.urlApi}${"list/"}`);
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
       return [];

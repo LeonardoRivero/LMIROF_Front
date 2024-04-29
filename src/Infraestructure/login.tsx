@@ -38,7 +38,6 @@ export default function SignUp() {
     event.preventDefault();
     ploc.otherTest(state);
     navigate("/index");
-    await otherPloc.otherTest({} as ILoginState);
   }
 
   async function handleChange(e: any) {

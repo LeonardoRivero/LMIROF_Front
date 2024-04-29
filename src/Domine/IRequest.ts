@@ -20,12 +20,6 @@ export interface ProviderRequest {
   city: number;
 }
 
-export interface SaleProductRequest {
-  quantity: number;
-  sale_price: number;
-  id: number;
-}
-
 export interface OrderRequest {
   seller: number;
   products: Array<OrderProductRequest>;
@@ -57,4 +51,18 @@ export interface PaymentOrderRequest {
   is_cash_payment: boolean;
   order_id: number;
   total: number;
+}
+
+export interface PurchaseProductRequest {
+  quantity: number;
+  product_id: number;
+  unit_price: number;
+}
+export interface PurchaseRequest {
+  reference_invoice: string;
+  tax: number;
+  subtotal: number;
+  total: number;
+  provider: number;
+  products: Array<PurchaseProductRequest>;
 }

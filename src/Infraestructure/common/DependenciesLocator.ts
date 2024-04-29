@@ -4,18 +4,21 @@ import { OrderPloc } from "../../Adapters/OrderPlocs";
 import { ProductsPloc } from "../../Adapters/ProductsPloc";
 import { SalePloc } from "../../Adapters/SalePloc";
 import { SellerBloc } from "../../Adapters/SellerBloc";
-import MediatorUseCases from "../../Application/MediatorUseCases";
+import MediatorGlobalState from "./MediatorGlobalState";
 import { ClientAPI } from "../utilities/HttpClientAPI";
+import { PurchasePloc } from "../../Adapters/PurchasePloc";
 
 const httpClient = new ClientAPI();
 function provideLoginPloc(): LoginBloc {
   const testPloc = new LoginBloc();
   return testPloc;
 }
+
 function provideSellerPloc(): SellerBloc {
   const sellerPloc = SellerBloc.getInstance(httpClient);
   return sellerPloc;
 }
+
 function provideProductPloc(): ProductsPloc {
   const productPloc = new ProductsPloc(httpClient);
   return productPloc;
@@ -25,6 +28,7 @@ function provideSalePloc(): SalePloc {
   const salePloc = new SalePloc(httpClient);
   return salePloc;
 }
+
 function provideOrderPloc(): OrderPloc {
   const orderPloc = new OrderPloc(httpClient);
   return orderPloc;
@@ -35,8 +39,13 @@ function providerCartPloc(): CartPloc {
   return cartPloc;
 }
 
-function providerMediator(): MediatorUseCases {
-  const mediator = new MediatorUseCases(httpClient);
+function providerPurchasePloc(): PurchasePloc {
+  const mediator = PurchasePloc.getInstance(httpClient);
+  return mediator;
+}
+
+function providerMediator(): MediatorGlobalState {
+  const mediator = MediatorGlobalState.getInstance(httpClient);
   return mediator;
 }
 export const dependenciesLocator = {
@@ -46,5 +55,6 @@ export const dependenciesLocator = {
   provideSalePloc,
   provideOrderPloc,
   providerCartPloc,
+  providerPurchasePloc,
   providerMediator,
 };

@@ -1,4 +1,4 @@
-import { ItemDTO } from "./DTOS";
+import { ItemDTO, ProductForBroughtDTO } from "./DTOS";
 import { OrderProductRequest, PaymentOrderRequest } from "./IRequest";
 import {
   OrderResponse,
@@ -64,4 +64,15 @@ export interface ICartState {
   orderProduct: OrderProductRequest | null;
   showModal: boolean;
   messageModal: string;
+}
+
+export interface IPurchaseState {
+  provider: string;
+  listProvider: Array<ProviderResponse>;
+  listProducts: Array<ProductForBroughtDTO>;
+  productIdSelected: number;
+  listProductsBought: Array<ProductResponse>;
+  subTotal: number;
+  total: number;
+  tax: number | undefined;
 }

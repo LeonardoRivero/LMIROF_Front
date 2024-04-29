@@ -1,3 +1,5 @@
+import { ProductResponse } from "./IResponse";
+
 export interface ItemDTO {
   id: number;
   title: string;
@@ -15,4 +17,10 @@ export interface IdentificationTypeDTO {
 export interface GenderDTO {
   id: number;
   name_gender: string;
+}
+
+export interface ProductForBroughtDTO extends ProductResponse {
+  checked: boolean;
+  unit_price: number | null;
+  quantity: number | null;
 }

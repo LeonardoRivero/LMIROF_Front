@@ -27,7 +27,7 @@ export interface IFactoryNotifications {
   createNotificator(notificationType: ModalType): Notificator;
 }
 
-export interface IMediatorUseCases {
+export interface IMediatorGlobalState {
   getAllProducts(): Promise<Array<ProductResponse>>;
   getAllPaymentMethod(): Promise<Array<PaymentMethodResponse>>;
 }

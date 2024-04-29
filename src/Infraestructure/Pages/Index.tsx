@@ -45,14 +45,14 @@ export default function Index() {
     <>
       <Typography variant="h5">Products LMirof</Typography>
       <hr />
-      <Grid container spacing={4} py={3}>
+      <Grid container spacing={2} py={2}>
         {state.listItems.map((item: ItemDTO) => (
-          <Grid item xs={12} sm={6} lg={3} key={item.id}>
+          <Grid item xs={12} sm={6} lg={2} key={item.id}>
             <Card className="animate__animated animate__fadeIn" raised>
               <CardActionArea>
                 <CardMedia
                   component="img"
-                  height="260"
+                  height="150"
                   image={item.url}
                   alt={item.title}
                   onClick={() => handleNavigation(item.id)}

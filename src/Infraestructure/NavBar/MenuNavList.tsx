@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 export default function MenuNavList() {
-  const pages: Array<string> = ["Inicio", "Products", "Orders", "Sellers"];
+  const pages: Array<string> = ["Inicio", "Products", "Orders", "Sellers", "Purchases"];
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = (event: any) => {

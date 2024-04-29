@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Alert, Snackbar,Box,Divider,CardMedia,Typography,Button,Grid,Card } from "@mui/material";
+import { Alert, Snackbar, Box, Divider, CardMedia, Typography, Button, Grid, Card } from "@mui/material";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import { ProductDetailResponse } from "../../../Domine/IResponse";
 import GoBackBtn from "../../ui/GoBackBtn";
@@ -14,7 +14,7 @@ export default function ItemDetail({ detail }: { detail: ProductDetailResponse }
   const state = usePlocState(ploc);
 
   function handleAddItemToCart(quantity: number) {
-    if (ploc.isInCart(detail.id,quantity) || quantity === 0) return;
+    if (ploc.isInCart(detail.id, quantity) || quantity === 0) return;
     const orderProduct: ItemDTO = {
       id: detail.id,
       price: parseFloat(detail.sale_price),

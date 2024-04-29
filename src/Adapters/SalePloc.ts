@@ -15,11 +15,7 @@ export class SalePloc extends Ploc<ISaleState> {
     this.listAllProductUseCase = new ListAllProductUseCase(this.httpClient);
     this.saleDetailByOrderIDUseCase = new SaleDetailByOrderIDUseCase(this.httpClient);
   }
-  changeEventTest() {
-    console.log(this.state);
-    // this.changeState({ ...this.state, });
-    // console.log(this.state);
-  }
+
   async getInitialData() {
     // console.log(a);
     // await this.service.execute();

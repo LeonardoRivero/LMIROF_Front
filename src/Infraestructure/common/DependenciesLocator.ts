@@ -6,7 +6,6 @@ import { SalePloc } from "../../Adapters/SalePloc";
 import { SellerBloc } from "../../Adapters/SellerBloc";
 import MediatorGlobalState from "./MediatorGlobalState";
 import { ClientAPI } from "../utilities/HttpClientAPI";
-import { PurchasePloc } from "../../Adapters/PurchasePloc";
 import { FactoryNotifications } from "../utilities/NotificationsImpl";
 
 export interface Dependencies {
@@ -16,7 +15,6 @@ export interface Dependencies {
   provideSalePloc: SalePloc
   provideOrderPloc: OrderPloc
   providerCartPloc: CartPloc
-  providerPurchasePloc: PurchasePloc
   providerMediator: MediatorGlobalState
 }
 const httpClient = new ClientAPI();
@@ -51,10 +49,7 @@ function providerCartPloc(): CartPloc {
   return cartPloc;
 }
 
-function providerPurchasePloc(): PurchasePloc {
-  const mediator = PurchasePloc.getInstance(httpClient);
-  return mediator;
-}
+
 
 function providerMediator(): MediatorGlobalState {
   const mediator = MediatorGlobalState.getInstance(httpClient);
@@ -67,6 +62,5 @@ export const dependenciesLocator: Dependencies = {
   provideSalePloc: provideSalePloc(),
   provideOrderPloc: provideOrderPloc(),
   providerCartPloc: providerCartPloc(),
-  providerPurchasePloc: providerPurchasePloc(),
   providerMediator: providerMediator(),
 };

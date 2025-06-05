@@ -5,7 +5,7 @@ export default function Logo() {
     <>
       <Avatar
         sx={{ marginRight: 3, height: 48, width: 55 }}
-        src="../assets/logo.png"
+        src="/LMIROF_Front/assets/logo.png"
         alt="Tejiendo Sueños"
         variant="rounded"
       />

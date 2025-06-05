@@ -1,22 +1,24 @@
 import {
   CreateProductUseCase,
+  GetAllProductsByReferenceUseCase,
   GetDetailProductByIdUseCase,
   ListAllProductUseCase,
 } from "../Application/ProductsUseCases";
 import { IProductRequest } from "../Domine/IRequest";
-import { HTTPClient, UseCase } from "../Domine/IPatterns";
+import { HTTPClient, IFactoryNotifications, ModalType, Notificator, UseCase } from "../Domine/IPatterns";
 import { IProductState } from "../Domine/IStates";
 import { Ploc } from "../Domine/Ploc";
 import { GetAllProvidersUseCase } from "../Application/ProviderUseCases";
 import { ProductDetailResponse, ProductResponse, ProviderResponse } from "../Domine/IResponse";
-import { SwAlModalWithButtons } from "../Infraestructure/utilities/NotificationsImpl";
 import { ItemDTO } from "../Domine/DTOS";
 export class ProductsPloc extends Ploc<IProductState> {
   private service: UseCase<IProductRequest, ProductResponse | null>;
   private providerUseCase: UseCase<null, Array<ProviderResponse>>;
   private listProductsUseCase: UseCase<null, Array<ProductResponse>>;
   private getDetailProductByIdUseCase: UseCase<number, ProductDetailResponse | null>;
-  constructor(private httpClient: HTTPClient) {
+  private getAllProductsByReferenceUseCase: UseCase<string, ProductResponse[]>
+  private sweetAlertModal: Notificator
+  constructor(private httpClient: HTTPClient, factory: IFactoryNotifications) {
     const initialState: IProductState = {
       name: "",
       provider: "",
@@ -33,6 +35,8 @@ export class ProductsPloc extends Ploc<IProductState> {
     this.providerUseCase = new GetAllProvidersUseCase(this.httpClient);
     this.listProductsUseCase = new ListAllProductUseCase(this.httpClient);
     this.getDetailProductByIdUseCase = new GetDetailProductByIdUseCase(httpClient);
+    this.getAllProductsByReferenceUseCase = new GetAllProductsByReferenceUseCase(httpClient);
+    this.sweetAlertModal = factory.createNotificator(ModalType.SweetAlert)
   }
 
   async createProduct(a: IProductState): Promise<void> {
@@ -45,9 +49,7 @@ export class ProductsPloc extends Ploc<IProductState> {
       gain_business: parseFloat(a.gainBusiness),
       gain_operational: parseFloat(a.gainOperational),
     };
-
-    const sweetAlertModal = new SwAlModalWithButtons();
-    const confirm = await sweetAlertModal.show("Atencion", "Desea crear el producto?");
+    const confirm: boolean = await this.sweetAlertModal.show("Atencion", "Desea crear el producto?");
 
     if (confirm == false) return;
     const response = await this.service.execute(payload);
@@ -69,11 +71,12 @@ export class ProductsPloc extends Ploc<IProductState> {
   async getAllProducts(): Promise<void> {
     const listProducts = await this.listProductsUseCase.execute();
     const itemsDto: Array<ItemDTO> = listProducts.map((p) => ({
-      url: p.url_image,
+      url: p.url_image[0],
       title: p.name,
       price: p.sale_price,
       id: p.id,
       quantity: 0,
+      reference: p.reference
     }));
     this.changeState({ ...this.state, listItems: itemsDto });
   }
@@ -82,5 +85,27 @@ export class ProductsPloc extends Ploc<IProductState> {
     if (product_id === undefined) return;
     const response = await this.getDetailProductByIdUseCase.execute(parseInt(product_id));
     this.changeState({ ...this.state, productDetail: response });
+  }
+
+  async getProductsByReference(reference: string | undefined): Promise<void> {
+    if (reference === undefined) return;
+    const listProducts = await this.getAllProductsByReferenceUseCase.execute(reference);
+    const itemsDto: Array<ItemDTO> = listProducts.map((p) => ({
+      url: p.url_image[0],
+      title: p.name,
+      price: p.sale_price,
+      id: p.id,
+      quantity: 0,
+      reference: p.reference
+    }));
+    const response = await this.getDetailProductByIdUseCase.execute(itemsDto[0].id);
+    this.changeState({ ...this.state, listItems: itemsDto, productDetail: response });
+  }
+
+  filterByTitle(listItems: ItemDTO[], titleProduct: string) {
+    const filteredItems = listItems.filter((item) =>
+      item.title.toLowerCase().includes(titleProduct.trim().toLowerCase())
+    );
+    this.changeState({ ...this.state, listItems: filteredItems });
   }
 }

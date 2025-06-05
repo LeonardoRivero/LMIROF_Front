@@ -1,5 +1,5 @@
 import { ItemDTO, ProductForBroughtDTO } from "./DTOS";
-import { OrderProductRequest, PaymentOrderRequest } from "./IRequest";
+import { OrderProductRequest } from "./IRequest";
 import {
   OrderResponse,
   ProductDetailResponse,

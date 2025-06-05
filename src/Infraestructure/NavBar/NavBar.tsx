@@ -5,7 +5,7 @@ import MenuNavList from "./MenuNavList";
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CartWidget from "../Pages/Cart/CartWidget";
+// import CartWidget from "../Pages/Cart/CartWidget";
 
 const darkTheme = createTheme({ palette: { mode: "dark" } });
 export default function Navbar() {
@@ -19,7 +19,7 @@ export default function Navbar() {
             <Container maxWidth="xs" disableGutters>
               <SearchBar />
             </Container>
-            <CartWidget />
+            {/* <CartWidget /> */}
           </Toolbar>
         </Container>
       </AppBar>

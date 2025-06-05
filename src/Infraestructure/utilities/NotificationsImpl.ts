@@ -46,7 +46,7 @@ export class SwAlToast implements Notificator {
   private title = "";
   private icon: SweetAlertIcon = "info";
   private timeout = 4000;
-  show(title?: string, message?: string): object {
+  async show(title?: string, message?: string): Promise<boolean> {
     if (message != undefined) this.message = message;
     if (title != undefined) this.title = title;
     const objectSweetAlert: SweetAlertOptions = {
@@ -64,7 +64,7 @@ export class SwAlToast implements Notificator {
     };
     const swalReact = withReactContent(Swal);
     swalReact.fire(objectSweetAlert);
-    return {};
+    return true;
   }
 
   setType(type: NotificationType): void {

@@ -4,16 +4,16 @@ import { SellerResponse, SummarySellerResponse } from "../Domine/IResponse";
 import HttpStatusCode from "./Utilities/HttpStatusCodes";
 
 export class GetAllSellerUseCase implements UseCase<null, Array<SellerResponse>> {
-  GenericService: HTTPClient;
+  httpclient: HTTPClient;
   private urlApi: string;
 
   public constructor(httpClient: HTTPClient) {
-    this.GenericService = httpClient;
+    this.httpclient = httpClient;
     this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_SELLER;
   }
 
   async execute(): Promise<Array<SellerResponse>> {
-    const response = await this.GenericService.GET(`${this.urlApi}${"list/"}`);
+    const response = await this.httpclient.GET(`${this.urlApi}${"list/"}`);
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
       return [];
     }
@@ -24,12 +24,12 @@ export class GetAllSellerUseCase implements UseCase<null, Array<SellerResponse>>
 }
 
 export class GetSummarySellerUseCase implements UseCase<number, SummarySellerResponse | null> {
-  GenericService: HTTPClient;
+  httpclient: HTTPClient;
   private urlApi: string;
   private rangeDate: RangeDateRequest | null;
 
   public constructor(httpClient: HTTPClient, rangeDate: RangeDateRequest | null) {
-    this.GenericService = httpClient;
+    this.httpclient = httpClient;
     this.rangeDate = rangeDate;
     this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_SUMMARYSELLER;
   }
@@ -39,7 +39,7 @@ export class GetSummarySellerUseCase implements UseCase<number, SummarySellerRes
       throw new Error("RangeData is null");
     }
     const queryparams = { start: this.rangeDate.start, end: this.rangeDate.end };
-    const response = await this.GenericService.GET(`${this.urlApi}${sellerId}${"/"}`, queryparams);
+    const response = await this.httpclient.GET(`${this.urlApi}${sellerId}${"/"}`, queryparams);
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
       return null;
     }

@@ -3,16 +3,16 @@ import { PaymentMethodResponse } from "../Domine/IResponse";
 import HttpStatusCode from "./Utilities/HttpStatusCodes";
 
 export class GetAllPaymentMethod implements UseCase<null, Array<PaymentMethodResponse>> {
-  GenericService: HTTPClient;
+  httpclient: HTTPClient;
   private urlApi: string;
 
   public constructor(httpClient: HTTPClient) {
-    this.GenericService = httpClient;
+    this.httpclient = httpClient;
     this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_PAYMENT_METHOD;
   }
 
   async execute(): Promise<Array<PaymentMethodResponse>> {
-    const response = await this.GenericService.GET(`${this.urlApi}${"list/"}`);
+    const response = await this.httpclient.GET(`${this.urlApi}${"list/"}`);
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
       return [];
     }

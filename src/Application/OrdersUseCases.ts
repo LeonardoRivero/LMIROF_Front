@@ -5,16 +5,16 @@ import HttpStatusCode from "./Utilities/HttpStatusCodes";
 import { SaleResponse } from "../Domine/IResponse";
 
 export class CreateOrderUseCase implements UseCase<OrderRequest, OrderResponse | null> {
-  GenericService: HTTPClient;
+  httpclient: HTTPClient;
   private urlApi: string;
 
   public constructor(httpClient: HTTPClient) {
-    this.GenericService = httpClient;
+    this.httpclient = httpClient;
     this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_ORDER;
   }
 
   async execute(payload: OrderRequest): Promise<OrderResponse | null> {
-    const response = await this.GenericService.POST(`${this.urlApi}${"create/"}`, payload);
+    const response = await this.httpclient.POST(`${this.urlApi}${"create/"}`, payload);
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
       return null;
     }
@@ -24,16 +24,16 @@ export class CreateOrderUseCase implements UseCase<OrderRequest, OrderResponse |
 }
 
 export class GetAllPendingOrderUseCase implements UseCase<null, Array<OrderResponse>> {
-  GenericService: HTTPClient;
+  httpclient: HTTPClient;
   private urlApi: string;
 
   public constructor(httpClient: HTTPClient) {
-    this.GenericService = httpClient;
+    this.httpclient = httpClient;
     this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_ORDER;
   }
 
   async execute(): Promise<Array<OrderResponse>> {
-    const response = await this.GenericService.GET(`${this.urlApi}${"pending/"}`);
+    const response = await this.httpclient.GET(`${this.urlApi}${"pending/"}`);
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
       return [];
     }
@@ -43,21 +43,21 @@ export class GetAllPendingOrderUseCase implements UseCase<null, Array<OrderRespo
 }
 
 export class GetAllClosedOrderUseCase implements UseCase<RangeDateRequest | null, Array<OrderResponse>> {
-  GenericService: HTTPClient;
+  httpclient: HTTPClient;
   private urlApi: string;
 
   public constructor(httpClient: HTTPClient) {
-    this.GenericService = httpClient;
+    this.httpclient = httpClient;
     this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_ORDER;
   }
 
   async execute(rangeDate: RangeDateRequest | null): Promise<Array<OrderResponse>> {
     let response: Response = new Response();
     if (rangeDate === null) {
-      response = await this.GenericService.GET(`${this.urlApi}${"closed/"}`);
+      response = await this.httpclient.GET(`${this.urlApi}${"closed/"}`);
     } else {
       const queryParameter = { start: rangeDate.start, end: rangeDate.end };
-      response = await this.GenericService.GET(`${this.urlApi}${"closed/"}`, queryParameter);
+      response = await this.httpclient.GET(`${this.urlApi}${"closed/"}`, queryParameter);
     }
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
       return [];
@@ -68,16 +68,16 @@ export class GetAllClosedOrderUseCase implements UseCase<RangeDateRequest | null
 }
 
 export class AddPaymentOrderUseCase implements UseCase<PaymentOrderRequest, SaleResponse | null> {
-  GenericService: HTTPClient;
+  httpclient: HTTPClient;
   private urlApi: string;
 
   public constructor(httpClient: HTTPClient) {
-    this.GenericService = httpClient;
+    this.httpclient = httpClient;
     this.urlApi = import.meta.env.VITE_ROOT_CORE + import.meta.env.VITE_SALE;
   }
 
   async execute(payload: PaymentOrderRequest): Promise<null> {
-    const response = await this.GenericService.POST(`${this.urlApi}${"create/"}`, payload);
+    const response = await this.httpclient.POST(`${this.urlApi}${"create/"}`, payload);
     if (!response.ok || response.status == HttpStatusCode.NO_CONTENT) {
       return null;
     }

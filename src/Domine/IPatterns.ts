@@ -8,13 +8,13 @@ export interface HTTPClient {
 }
 
 export interface UseCase<IRequest, IResponse> {
-  GenericService: HTTPClient;
+  httpclient: HTTPClient;
   execute(request?: IRequest): Promise<IResponse> | IResponse;
 }
 
 export type NotificationType = "info" | "warning" | "success" | "error" | "question";
 export interface Notificator {
-  show(title?: string, message?: string): object;
+  show(title?: string, message?: string): Promise<boolean>;
   setType(type: NotificationType): void;
   setTime(timerMs: number): void;
 }

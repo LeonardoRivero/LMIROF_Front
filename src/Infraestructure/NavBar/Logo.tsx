@@ -5,8 +5,8 @@ export default function Logo() {
     <>
       <Avatar
         sx={{ marginRight: 3, height: 48, width: 55 }}
-        src="../assets/react.svg"
-        alt="LMirofLogo"
+        src="../assets/logo.png"
+        alt="Tejiendo Sueños"
         variant="rounded"
       />
     </>

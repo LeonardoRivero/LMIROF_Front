@@ -6,6 +6,7 @@ export interface ItemDTO {
   price: number;
   url: string;
   quantity: number;
+  reference: string
 }
 
 export interface IdentificationTypeDTO {

@@ -11,7 +11,7 @@ export function usePlocState<S>(ploc: Ploc<S>) {
 
     ploc.subscribe(stateSubscription);
 
-    // return () => ploc.unsubscribe(stateSubscription);
+    return () => ploc.unsubscribe(stateSubscription);
   }, [ploc]);
 
   return state;

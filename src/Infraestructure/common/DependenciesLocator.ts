@@ -7,8 +7,20 @@ import { SellerBloc } from "../../Adapters/SellerBloc";
 import MediatorGlobalState from "./MediatorGlobalState";
 import { ClientAPI } from "../utilities/HttpClientAPI";
 import { PurchasePloc } from "../../Adapters/PurchasePloc";
+import { FactoryNotifications } from "../utilities/NotificationsImpl";
 
+export interface Dependencies {
+  provideLoginPloc: LoginBloc
+  provideSellerPloc: SellerBloc
+  provideProductPloc: ProductsPloc
+  provideSalePloc: SalePloc
+  provideOrderPloc: OrderPloc
+  providerCartPloc: CartPloc
+  providerPurchasePloc: PurchasePloc
+  providerMediator: MediatorGlobalState
+}
 const httpClient = new ClientAPI();
+const factoryNotifications = new FactoryNotifications()
 function provideLoginPloc(): LoginBloc {
   const testPloc = new LoginBloc();
   return testPloc;
@@ -20,7 +32,7 @@ function provideSellerPloc(): SellerBloc {
 }
 
 function provideProductPloc(): ProductsPloc {
-  const productPloc = new ProductsPloc(httpClient);
+  const productPloc = new ProductsPloc(httpClient, factoryNotifications);
   return productPloc;
 }
 
@@ -48,13 +60,13 @@ function providerMediator(): MediatorGlobalState {
   const mediator = MediatorGlobalState.getInstance(httpClient);
   return mediator;
 }
-export const dependenciesLocator = {
-  provideLoginPloc,
-  provideSellerPloc,
-  provideProductPloc,
-  provideSalePloc,
-  provideOrderPloc,
-  providerCartPloc,
-  providerPurchasePloc,
-  providerMediator,
+export const dependenciesLocator: Dependencies = {
+  provideLoginPloc: provideLoginPloc(),
+  provideSellerPloc: provideSellerPloc(),
+  provideProductPloc: provideProductPloc(),
+  provideSalePloc: provideSalePloc(),
+  provideOrderPloc: provideOrderPloc(),
+  providerCartPloc: providerCartPloc(),
+  providerPurchasePloc: providerPurchasePloc(),
+  providerMediator: providerMediator(),
 };

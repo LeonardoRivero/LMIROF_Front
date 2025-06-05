@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "name": "Guantes",
+    "reference": "TS1",
+    "sale_price": 28000,
+    "status": true,
+    "url_image": ["../assets/glove2.jpg", "../assets/glove.jpg"],
+    "description": "Guantes Tejidos en Crochet Hechos a Mano para tus días fríos. Confeccionados cuidadosamente, estos guantes ofrecen una combinación perfecta de calidez, comodidad y diseño.\n\nSu tejido suave permite movilidad de los dedos mientras mantiene tus manos abrigadas. Disponibles en varios colores y tamaños, son el complemento ideal para quienes valoran lo hecho a mano y el estilo natural.",
+    "characteristics": [
+      "Hechos 100% a mano con hilo de alta calidad",
+      "Diseño cómodo y ajustable",
+      "Textura cálida y transpirable",
+      "Perfectos para regalar o usar a diario"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Funda para celular",
+    "reference": "TS2",
+    "sale_price": 30000,
+    "status": true,
+    "url_image": [
+      "../assets/bagcellphone.jpg",
+      "../assets/bagcellphoneII.jpg",
+      "../assets/bagcellphoneIII.jpg",
+      "../assets/bagcellphone4.jpg"
+    ],
+    "description": "Funda para celular hecha 100% a mano, esta funda combina funcionalidad y diseño, protegiendo tu dispositivo de rayones y golpes leves.\n\nSu diseño ajustado se adapta a la mayoría de los modelos de smartphones. Disponible en distintos colores, es el accesorio perfecto para quienes valoran los detalles hechos a mano",
+    "characteristics": [
+      "Hecha a mano con técnica de crochet",
+      "Suave, liviana y flexible",
+      "Protege contra rayones y suciedad",
+      "Ideal como regalo original"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Mochila Wayuu",
+    "reference": "TS3",
+    "sale_price": 150000,
+    "status": true,
+    "url_image": ["../assets/wayuu1.jpg"],
+    "description": "Descubre la belleza y tradición de la cultura Wayuu con esta mochila artesanal única.\n\nHecha con hilos de algodón, esta mochila combina resistencia, comodidad y estilo. Su diseño espacioso y liviano la hace perfecta para el día a día, viajes, playa o uso casual.",
+    "characteristics": [
+      "Hecha a mano con técnica de crochet",
+      "Suave, liviana y flexible",
+      "Material: 100% algodón",
+      "Dimensiones: 25-30 cm de alto aprox.",
+      "Cierre: Cordón ajustable",
+      "Tiempo de elaboración: 7 a 10 días por pieza"
+    ]
+  }
+]

@@ -60,13 +60,15 @@ export interface ProviderResponse {
 export interface ProductResponse {
   id: number;
   name: string;
-  provider: ProviderResponse;
+  // provider: ProviderResponse;
   reference: string;
   status: boolean;
   sale_price: number;
-  gain_business: number;
-  gain_operational: number;
-  url_image: string;
+  // gain_business: number;
+  // gain_operational: number;
+  url_image: string[];
+  description: string
+  characteristics: string[]
 }
 
 export interface SellerResponse {
@@ -90,13 +92,15 @@ export interface SaleResponse {
 
 export interface ProductDetailResponse {
   name: string;
-  stock: number;
+  // stock: number;
   id: number;
-  provider: string;
+  // provider: string;
   sale_price: string;
-  gain_business: string;
-  gain_operational: string;
-  url_image: string;
+  // gain_business: string;
+  // gain_operational: string;
+  url_image: string[];
+  description: string
+  characteristics: string[]
 }
 
 export interface SellerNotDepthResponse {

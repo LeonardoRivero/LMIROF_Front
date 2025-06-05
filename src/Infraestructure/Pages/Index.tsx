@@ -1,6 +1,3 @@
-// import { useParams } from 'react-router-dom';
-
-// import LoadingSpinner from "../ui/LoadingSpinner";
 import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -10,29 +7,26 @@ import CardContent from "@mui/material/CardContent";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { ItemDTO } from "../../Domine/DTOS";
-import { dependenciesLocator } from "../common/DependenciesLocator";
 import { usePlocState } from "../common/usePlocState";
+import WhatsappButton from "../ui/WhatsappBtn";
+import { useDependencies } from "../context/DependenciesProvider";
 
 export default function Index() {
-  // const [items, setItems] = useState(null);
-  // const [loading, setLoading] = useState(false);
-  const ploc = dependenciesLocator.provideProductPloc();
+  const { provideProductPloc } = useDependencies();
+  const ploc = provideProductPloc;
   const state = usePlocState(ploc);
-
-  const { term } = useParams();
   const navigate = useNavigate();
   const handleNavigation = (id: number) => navigate(`/item/${id}`);
 
+  const { term } = useParams();
+
   useEffect(() => {
     const getAllProducts = async () => {
-      await ploc.getAllProducts();
       try {
-        const items = ploc.state.listItems;
         if (term) {
-          const filteredItems = items.filter((item) => item.title.toLowerCase().includes(term.trim().toLowerCase()));
-          ploc.changeState({ ...state, listItems: filteredItems });
+          ploc.filterByTitle(state.listItems, term);
         } else {
-          ploc.changeState({ ...state, listItems: items });
+          await ploc.getAllProducts();
         }
       } catch (err) {
         console.error(err);
@@ -43,16 +37,14 @@ export default function Index() {
 
   return (
     <>
-      <Typography variant="h5">Products LMirof</Typography>
-      <hr />
       <Grid container spacing={2} py={2}>
         {state.listItems.map((item: ItemDTO) => (
-          <Grid item xs={12} sm={6} lg={2} key={item.id}>
+          <Grid item xs={12} sm={6} lg={3} key={item.id}>
             <Card className="animate__animated animate__fadeIn" raised>
               <CardActionArea>
                 <CardMedia
                   component="img"
-                  height="150"
+                  height="350"
                   image={item.url}
                   alt={item.title}
                   onClick={() => handleNavigation(item.id)}
@@ -63,11 +55,21 @@ export default function Index() {
                   </Typography>
                 </CardContent>
               </CardActionArea>
-              <CardActions sx={{ display: "flex", justifyContent: "space-around" }}>
-                <Button size="small" color="error" onClick={() => handleNavigation(item.id)}>
+              <CardActions
+                sx={{ display: "flex", justifyContent: "space-around" }}
+              >
+                <Button
+                  size="small"
+                  color="error"
+                  onClick={() => handleNavigation(item.id)}
+                >
                   Ver más
                 </Button>
-                <Typography variant="subtitle2" color="text.secondary" align="right">
+                <Typography
+                  variant="subtitle2"
+                  color="text.secondary"
+                  align="right"
+                >
                   {`$${item.price}`}
                 </Typography>
               </CardActions>
@@ -75,6 +77,10 @@ export default function Index() {
           </Grid>
         ))}
       </Grid>
+      <WhatsappButton
+        phoneNumber="573185744688"
+        message="Hola, quiero más información sobre tus productos"
+      />
     </>
   );
 }

@@ -1,19 +1,16 @@
 import AppRouter from "./Infraestructure/routes/AppRouter";
 import "./App.css";
-import NotificationContextProvider from "./Infraestructure/context/NotificationsContext";
 import ThemeContext from "./Infraestructure/context/ThemeContext";
-import CartProvider from "./Infraestructure/context/CartContext";
+import { DependenciesProvider } from "./Infraestructure/context/DependenciesProvider";
 
 export default function App() {
   return (
     <div className="App">
-      <NotificationContextProvider>
-        <CartProvider>
-          <ThemeContext dark>
-            <AppRouter />
-          </ThemeContext>
-        </CartProvider>
-      </NotificationContextProvider>
+      <ThemeContext dark={true}>
+        <DependenciesProvider>
+          <AppRouter />
+        </DependenciesProvider>
+      </ThemeContext>
     </div>
   );
 }
